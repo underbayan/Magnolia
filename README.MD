@@ -1,0 +1,213 @@
+![Logo](./logo.png)
+
+# Tencent Common h5 share tool
+
+> 支持 QQ，QZONE，WEISHI，微信的 app 的 jsbridge，在 pc 端使用 webapi 分享
+> 在 QQ，QZONE，WEISHI app 中支持直接分享图片的 base64 数据。
+
+-   直接引入 cdn 的 js 包即可自动运行
+-   支持通过 import 或者 require 的方式来使用
+-   支持自定义插件，扩展和修改功能及其样式。
+
+#### Package
+
+
+
+```bash
+# With tnpm
+tnpm install @tencent/h5-share
+```
+
+CDN links
+
+-   [ES5 Minified (UMD)](https://qzonestyle.gtimg.cn/qzone/hybrid/app/weishi/lib/tx-share/dist/tx-share.js)
+-   [ES5 Minified 1.0.0 (UMD)](https://qzonestyle.gtimg.cn/qzone/hybrid/app/weishi/lib/tx-share/dist/tx-share.1.0.0.js)
+
+#### 使用方法
+
+-   @see [demo](https://qzonestyle.gtimg.cn/qzone/hybrid/app/weishi/lib/tx-share/test/demo.html)
+
+<details>
+
+**Browser**
+
+>
+
+```html
+<!DOCTYPE html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7"> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8"> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9"> <![endif]-->
+<!--[if gt IE 8]><!-->
+<html class="no-js">
+<!--<![endif]-->
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Tencent client share tool - 1.0.0</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="">
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <style>
+        .button-panel button {
+            background-color: forestgreen !important;
+            color: white !important;
+            padding: 4px 8px !important;
+            border: 1px solid white;
+            margin: 2px 6px;
+        }
+
+        .button-panel {
+            position: fixed;
+            z-index: 99999999 !important;
+
+        }
+
+    </style>
+</head>
+
+<body>
+    <!--[if lt IE 7]>
+            <p class="browsehappy">You are using an <strong>outdated</strong> browser. Please <a href="#">upgrade your browser</a> to improve your experience.</p>
+        <![endif]-->
+    <div style="" class="button-panel">
+        <button onclick=" share.api.openNativeShare()">open app's sharepanel</button>
+        <button onclick=" share.ui.open()">open own</button>
+        <button onclick=" share.ui.close()">close own</button>
+        <button onclick=" newShareInfo()">newShareInfo</button>
+        <button onclick=" share.ui.openMask()">openMask</button>
+        <button onclick=" share.ui.closeMask()">closeMask</button>
+        <button onclick="resetshare()">reset Share </button>
+    </div>
+    <script src="../dist/tx-share.js"></script>
+    <script>
+        const share = new TX_SHARE
+        const img =
+            'data:image/jpeg;base64,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'
+
+        function newShareInfo() {
+            share.api.setShareInfo({
+                type: 'link' /**link| base64*/ ,
+                base64: img,
+                link: window.location.href /** reuqired ,url link*/ ,
+                title: document.title,
+                imgUrl: 'http://mat1.gtimg.com/www/qq2018/imgs/qq_logo_2018x2.png',
+                desc: 'Share!!!Share!!!Share!!!Share!!!Share!!!Share!!!'
+            }, data => alert(data))
+            share.ui.update()
+        }
+
+        function resetshare() {
+            share.config({
+                shareInfo: {
+                    type: 'link' /**link| base64*/ ,
+                    base64: img,
+                    link: window.location.href /** reuqired ,url link*/ ,
+                    title: document.title,
+                    imgUrl: 'http://img1.gtimg.com/rcdimg/20180719/17/3714409016_273x145.jpg',
+                    desc: 'reset!!!reset!!!reset!!!reset!!!reset!!!reset!!!'
+                },
+                callback: data => alert(data)
+            })
+        }
+
+        function success_jsonpCallback(data) {}
+        jQuery.ajax({
+            url: 'http://activity.qzone.qq.com/fcg-bin/fcg_act_weixin_jssdk_sig',
+            type: "GET",
+            dataType: "jsonp",
+            data: {
+                url: location.href.replace(location.hash, '')
+            },
+            jsonpCallback: "success_jsonpCallback",
+            success: function (data) {
+                share.config({
+                    shareInfo: {
+                        type: 'link' /**link| base64*/ ,
+                        base64: img,
+                        link: window.location.href /** reuqired ,url link*/ ,
+                        title: document.title,
+                        imgUrl: 'https://qzonestyle.gtimg.cn/qzone_v6/proj_qzonelogin/img/qzone-login-logo-dark.32@2x.png',
+                        desc: 'weixin!!weixin!!weixin!!weixin!!weixin!!'
+                    },
+                    callback: data => alert(data),
+                    wxConfig: data.data,
+                    uiState: {
+                        copy: {
+                            chooseShare: 'your own copy',
+                            shareImage: '分享图',
+                            shareLink: '分享链接'
+                        },
+                        shareConfig: {
+                            qq: false,
+                            qz: true,
+                            wx: true,
+                            timeLine: true,
+                            weibo: false
+                        }
+                    }
+                }).then(() => {})
+            }
+        })
+
+    </script>
+</body>
+
+</html>
+```
+
+</details>
+<details>
+### using in vue with import
+```
+<template>
+</template>
+<script>
+export default {
+  methods: {},
+  mounted() {
+    const aux = async () => {
+      const { default: SHARE } = await import('../../../../lib/tx-share')
+      const img =
+        'data:image/jpeg;base64,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'
+      const share = new SHARE()
+      await share.config({
+        shareInfo: {
+          type: 'link' /**link| base64*/,
+          base64: img,
+          link: window.location.href /** reuqired ,url link*/,
+          title: document.title,
+          imgUrl: 'http://mat1.gtimg.com/www/qq2018/imgs/qq_logo_2018x2.png',
+          desc: 'Share!!!Share!!!Share!!!Share!!!Share!!!Share!!!'
+        },
+        callback: data => alert(data),
+        wxConfig: {
+          
+        },
+        uiState: {
+          copy: {
+            chooseShare: 'your own copy',
+            shareImage: '分享图',
+            shareLink: '分享链接'
+          },
+          shareConfig: {
+            qq: false,
+            qz: true,
+            wx: true,
+            wxNews: true,
+            weibo: false
+          }
+        }
+      })
+      share.ui.open()
+    }
+    aux()
+  }
+}
+</script>
+
+```
+</details>
+```

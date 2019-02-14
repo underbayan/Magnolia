@@ -1,0 +1,20 @@
+{
+    "presets": [
+        [
+            "@babel/preset-env",
+            {
+                "debug": false,
+                "modules": "umd",
+                "targets": { "browsers": ["safari 8"] }
+            }
+        ]
+    ],
+    "plugins": [
+        ["@babel/plugin-transform-runtime"],
+        ["transform-object-assign"],
+        ["transform-object-rest-spread"],
+        ["syntax-dynamic-import"],
+        ["transform-es2015-computed-properties"],
+        ["@babel/plugin-proposal-optional-chaining"]
+    ]
+}
